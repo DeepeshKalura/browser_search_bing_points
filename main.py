@@ -40,8 +40,6 @@ def register():
 
 
 
-
-
 try:
     driver = webdriver.Edge()
 except  Exception as e:
