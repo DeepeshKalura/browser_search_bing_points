@@ -15,28 +15,21 @@ def get_question():
         questions.append(question["question"])
     return questions
 
+def openRandomFirstSearch():
+    driver.get('https://www.bing.com/')
+    driver.implicitly_wait(5)
+    time.sleep(5)
+    search_box = driver.find_element('id', 'sb_form_q')
+    search_box.send_keys("Searching the best super hero")
+    search_box.send_keys(Keys.RETURN)
 
-try:
-    driver = webdriver.Edge()
-except  Exception as e:
-    print(e)
-    print("Please install Edge WebDriver and add it to your PATH")
-    exit(1)
 
 
 
 def register():
-    driver.get('https://www.bing.com/')
-    driver.implicitly_wait(5)
-    search_box = driver.find_element('id', 'sb_form_q')
-    search_box.send_keys("Selenium with Python")
-    search_box.send_keys(Keys.ENTER)
+    time.sleep(5)
     sign_in_link = driver.find_element(By.ID, "id_l")
     sign_in_link.click()
-
-    sign_in_button = driver.find_element(By.ID, "id_a")
-    sign_in_button.click()
-
     try :
         email = driver.find_element(By.ID, "i0116")
         email.send_keys(EMAIL)
@@ -48,19 +41,32 @@ def register():
 
 
 
+
+try:
+    driver = webdriver.Edge()
+except  Exception as e:
+    print(e)
+    print("Please install Edge WebDriver and add it to your PATH")
+    exit(1)
+
+openRandomFirstSearch()
 register()
-time.sleep(30)
 
-not_to_signed = driver.find_element(By.ID, "declineButton")
-not_to_signed.click()
+phoneSeLink = input("Please enter the yes:   ")
 
-questions = get_question()
-for i in questions:
-    search_box = driver.find_element('id', 'sb_form_q')
-    search_box.clear()
-    search_box.send_keys(i)
-    search_box.send_keys(Keys.RETURN)
-    time.sleep(5)
+
+if (phoneSeLink == "yes"):
+    not_to_signed = driver.find_element(By.ID, "declineButton")
+    not_to_signed.click()
+
+    questions = get_question()
+    for i in questions:
+        search_box = driver.find_element('id', 'sb_form_q')
+        search_box.clear()
+        search_box.send_keys(i)
+        search_box.send_keys(Keys.RETURN)
+        time.sleep(4)
+
 
 driver.quit()
 print("Ent of the program")
