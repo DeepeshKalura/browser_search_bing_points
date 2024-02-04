@@ -65,7 +65,7 @@ if (phoneSeLink == "yes"):
         search_box.clear()
         search_box.send_keys(i)
         search_box.send_keys(Keys.RETURN)
-        time.sleep(4)
+        time.sleep(5)
 
 
 driver.quit()
