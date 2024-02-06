@@ -5,6 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
 from constant import EMAIL
+from selenium.webdriver.common.action_chains import ActionChains
+
+
 
 def get_question():
     API_URL = "https://opentdb.com/api.php?amount=90"
@@ -18,7 +21,7 @@ def get_question():
 def openRandomFirstSearch():
     driver.get('https://www.bing.com/')
     driver.implicitly_wait(5)
-    time.sleep(5)
+    time.sleep(3)
     search_box = driver.find_element('id', 'sb_form_q')
     search_box.send_keys("Searching the best super hero")
     search_box.send_keys(Keys.RETURN)
@@ -26,13 +29,21 @@ def openRandomFirstSearch():
 
 
 
-def register():
-    time.sleep(5)
+def register(email : str):
+    time.sleep(3)
     sign_in_link = driver.find_element(By.ID, "id_l")
     sign_in_link.click()
+    actions = ActionChains(driver)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.TAB)
+    actions.perform()
+    time.sleep(3)
+    actions.send_keys(Keys.TAB)
+    actions.send_keys(Keys.ENTER)
+    actions.perform()
     try :
         email = driver.find_element(By.ID, "i0116")
-        email.send_keys(EMAIL)
+        email.send_keys(email)
         email.send_keys(Keys.ENTER)
     except Exception as e:
         print(e)
@@ -40,6 +51,7 @@ def register():
 
 
 
+email = EMAIL
 try:
     driver = webdriver.Edge()
 except  Exception as e:
@@ -48,12 +60,19 @@ except  Exception as e:
     exit(1)
 
 openRandomFirstSearch()
-register()
+register(email)
 
 phoneSeLink = input("Please enter the yes:   ")
 
 
 if (phoneSeLink == "yes"):
+    # try :
+    #     email = driver.find_element(By.ID, "i0116")
+    #     email.send_keys(email)
+    #     email.send_keys(Keys.ENTER)
+    # except Exception as e:
+    #     print(e)
+    #     print("Please check the HTML element ID for the email input field")
     not_to_signed = driver.find_element(By.ID, "declineButton")
     not_to_signed.click()
 
